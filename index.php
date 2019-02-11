@@ -22,7 +22,7 @@ $access_token = ($json_dict['access_token']);
 
 $ch = curl_init();
 
-$query_string = '?f=tweets&q=brexit';
+$query_string = '?f=tweets&q=brexit&count=50';
 
 curl_setopt($ch, CURLOPT_URL, "https://api.twitter.com/1.1/search/tweets.json" . $query_string);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
@@ -42,7 +42,7 @@ $just_tweets = json_decode($result,true);
 
 foreach ($just_tweets['statuses'] as $oneTweet)
 {
-	echo utf8_encode($oneTweet['text'].'<br>');
+	echo $oneTweet['text'].'<br>';
 }
 
 ?>
