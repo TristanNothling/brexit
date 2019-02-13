@@ -19,7 +19,7 @@ $access_token = ($json_dict['access_token']);
 
 $ch = curl_init();
 
-$query_string = '?f=tweets&q=brexit&count=50&result_type=recent';
+$query_string = '?f=tweets&q=brexit&count=100&result_type=recent';
 
 curl_setopt($ch, CURLOPT_URL, "https://api.twitter.com/1.1/search/tweets.json" . $query_string);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
@@ -28,19 +28,34 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer '. $access_tok
 $result = curl_exec($ch);
 $just_tweets = json_decode($result,true);
 
-$outputFileName = "tweets.txt"; /*quick way to make a db*/
-$logFile = fopen("/kunden/homepages/29/d697604814/htdocs/Bid4MyJob/trexit/".$outputFileName, "r") or die("Unable to open the txt file.");
-$tweet_buffer_string = "";
+$host_name = 'db773293947.hosting-data.io';
+$database = 'db773293947';
+$user_name = 'dbo773293947';
+$password = 'N5cDPAV24wbsUKb***';
+$conn = mysqli_connect($host_name, $user_name, $password, $database);
+
+if (mysqli_connect_errno()) 
+{
+    die('<p>Failed to connect to MySQL: '.mysqli_connect_error().'</p>');
+} 
 
 foreach ($just_tweets['statuses'] as $oneTweet)
 	{
-    echo $oneTweet['id_str'] . ' ~ ' . $oneTweet['text'] . ' ~ ' . $oneTweet['created_at'] PHP_EOL;
-    //echo '<p>'.$oneTweet['text'].'</p>';
-	}
+	echo $oneTweet['id_str'];
+	$sql = "SELECT * FROM tweets WHERE id_str='". $oneTweet['id_str'] ."'";
+	$result = $conn->query($sql);
+	if ($result->num_rows == 0) 
+		{
+		$formatted_time = substr($oneTweet['created_at'],4,-10);
+		$dt = date("Y-m-d H:i:s", strtotime($formatted_time));
+		$sql = "INSERT INTO tweets (id_str,text,created_at) VALUES ('".$oneTweet['id_str']."', '". mysqli_real_escape_string($oneTweet['text'])."', '".$dt."')";
 
-fclose($logFile);
-$logFile = fopen("/kunden/homepages/29/d697604814/htdocs/Bid4MyJob/trexit/".$outputFileName,"a") or die("Unable to open the txt file.");
-fwrite($logFile,$tweet_buffer_string);
-fclose($logFile);
+		if (!mysqli_query($conn, $sql)) 
+			{
+			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+			}
+		}
+
+	}
 
 ?>
