@@ -41,14 +41,16 @@ if (mysqli_connect_errno())
 
 foreach ($just_tweets['statuses'] as $oneTweet)
 	{
-	echo $oneTweet['id_str'];
 	$sql = "SELECT * FROM tweets WHERE id_str='". $oneTweet['id_str'] ."'";
 	$result = $conn->query($sql);
 	if ($result->num_rows == 0) 
 		{
 		$formatted_time = substr($oneTweet['created_at'],4,-10);
 		$dt = date("Y-m-d H:i:s", strtotime($formatted_time));
-		$sql = "INSERT INTO tweets (id_str,text,created_at) VALUES ('".$oneTweet['id_str']."', '". mysqli_real_escape_string($oneTweet['text'])."', '".$dt."')";
+
+		$escaped_string = mysqli_real_escape_string($conn,$oneTweet['text']);
+
+		$sql = "INSERT INTO tweets (id_str,text,created_at) VALUES ('".$oneTweet['id_str']."', '$escaped_string', '$dt')";
 
 		if (!mysqli_query($conn, $sql)) 
 			{
