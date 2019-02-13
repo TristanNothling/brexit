@@ -28,29 +28,22 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer '. $access_tok
 $result = curl_exec($ch);
 $just_tweets = json_decode($result,true);
 
-$host_name = 'db773293947.hosting-data.io';
-$database = 'db773293947';
-$user_name = 'dbo773293947';
-$password = 'N5cDPAV24wbsUKb***';
-$conn = mysqli_connect($host_name, $user_name, $password, $database);
-
-if (mysqli_connect_errno()) 
-{
-    die('<p>Failed to connect to MySQL: '.mysqli_connect_error().'</p>');
-} 
+include 'db-connector.php';
 
 foreach ($just_tweets['statuses'] as $oneTweet)
 	{
-	$sql = "SELECT * FROM tweets WHERE id_str='". $oneTweet['id_str'] ."'";
+	$this_id = $oneTweet['id_str'];
+
+	$sql = "SELECT * FROM tweets WHERE id_str='$this_id'";
 	$result = $conn->query($sql);
 	if ($result->num_rows == 0) 
+
 		{
 		$formatted_time = substr($oneTweet['created_at'],4,-10);
 		$dt = date("Y-m-d H:i:s", strtotime($formatted_time));
-
 		$escaped_string = mysqli_real_escape_string($conn,$oneTweet['text']);
 
-		$sql = "INSERT INTO tweets (id_str,text,created_at) VALUES ('".$oneTweet['id_str']."', '$escaped_string', '$dt')";
+		$sql = "INSERT INTO tweets (id_str,text,created_at) VALUES ('$this_id','$escaped_string','$dt')";
 
 		if (!mysqli_query($conn, $sql)) 
 			{
@@ -59,5 +52,6 @@ foreach ($just_tweets['statuses'] as $oneTweet)
 		}
 
 	}
+	echo 'success';
 
 ?>

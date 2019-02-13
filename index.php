@@ -1,29 +1,49 @@
 <!DOCTYPE html>
 <html>
-<title></title>
-<body>
-<div class="tweet-list" style="width:66%;height:100%;padding:1rem;">
+<head>
+<title>Brexit On The Brain</title>
 
-<?php 
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
-$host_name = 'db773293947.hosting-data.io';
-$database = 'db773293947';
-$user_name = 'dbo773293947';
-$password = 'N5cDPAV24wbsUKb***';
-$conn = mysqli_connect($host_name, $user_name, $password, $database);
-
-if (mysqli_connect_errno()) 
+<style>
+#fetch
 {
-    die('<p>Failed to connect to MySQL: '.mysqli_connect_error().'</p>');
-} 
-
-$sql = "SELECT * FROM tweets ORDER BY created_at DESC";
-$result = $conn->query($sql);
-while ($row = $result->fetch_assoc()) 
-{
-    echo "<p>" . $row['text'] . " " . $row['created_at'] . "</p>";
+	padding:1rem;
+	font-weight:600;
+	border-radius: 25px;
+	color:#1da1f2;
+	border: 2px solid #1da1f2;
+	transition: all 0.2s ease-in;
+	background-color: #FFFFFF00;
+	outline:none;
+    cursor:pointer;
 }
-?>
+
+#fetch:hover
+{
+	background-color:#1da1f2;
+	color:#FFF;
+}
+
+p
+{
+	padding: 0.5rem;
+    border-bottom: 1px solid #33333322;
+    padding-bottom: 20px;
+    font-size: 16px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+</style>
+</head>
+
+<body style="margin:0;">
+
+	<div style="padding:1rem;">
+	<button id="fetch">Fetch More</button>
+	</div>
+
+<div class="tweet-list" style="width:92%;height:100%;padding:1rem;">
 
 </div>
 </body>
@@ -38,16 +58,20 @@ function get_more_tweets()
 		url: "http://bid4myjob.co.uk/get-more-tweets.php",
 		method: "GET"
 		});
-	request.done(function(tweets)
+
+	var second_request = $.get({
+		url: "http://bid4myjob.co.uk/tweet-list.php",
+		method: "GET"
+		});
+	second_request.done(function(tweets)
 		{        
-        console.log(tweets);
-		$('.tweet-list').append(tweets);
+		$('.tweet-list').html(tweets);
 		});
 }
 
-get_more_tweets();
-
-
+$('#fetch').click( function() {
+	get_more_tweets();
+})
 
 </script>
 </html>
