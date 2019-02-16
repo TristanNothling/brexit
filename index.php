@@ -10,13 +10,14 @@
 {
 	padding:1rem;
 	font-weight:600;
-	border-radius: 25px;
+	border-radius: 26px;
 	color:#1da1f2;
 	border: 2px solid #1da1f2;
-	transition: all 0.2s ease-in;
+	transition: all 0.12s ease-in;
 	background-color: #FFFFFF00;
 	outline:none;
     cursor:pointer;
+    font-family: 'Montserrat', sans-serif;
 }
 
 #fetch:hover
@@ -28,8 +29,8 @@
 p
 {
 	padding: 0.5rem;
-    border-bottom: 1px solid #33333322;
-    padding-bottom: 20px;
+    border-bottom: 1px solid #22222222;
+    padding-bottom: 22px;
     font-size: 16px;
 	font-family: 'Montserrat', sans-serif;
 }
@@ -39,13 +40,13 @@ p
 
 <body style="margin:0;">
 
-	<div style="padding:1rem;">
+<div style="padding:1rem;">
 	<button id="fetch">Fetch More</button>
-	</div>
+</div>
 
 <div class="tweet-list" style="width:92%;height:100%;padding:1rem;">
-
 </div>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
@@ -54,11 +55,19 @@ p
 <script>
 function get_more_tweets()
 {
-	var request = $.get({
+	var first_request = $.get({
 		url: "http://bid4myjob.co.uk/get-more-tweets.php",
 		method: "GET"
 		});
+	first_request.done(function(msg)
+		{        
+		console.log(msg);
+		list_the_tweets();
+		});
+}
 
+function list_the_tweets()
+{
 	var second_request = $.get({
 		url: "http://bid4myjob.co.uk/tweet-list.php",
 		method: "GET"
@@ -72,6 +81,8 @@ function get_more_tweets()
 $('#fetch').click( function() {
 	get_more_tweets();
 })
+
+get_more_tweets();
 
 </script>
 </html>
