@@ -22,7 +22,7 @@ $access_token = ($json_dict['access_token']);
 
 $ch = curl_init();
 
-$query_string = '?f=tweets&q=brexit&count=100&result_type=recent&tweet_mode=extended';
+$query_string = '?f=tweets&q=brexit&count=100&result_type=recent&tweet_mode=extended&lang=en';
 
 curl_setopt($ch, CURLOPT_URL, "https://api.twitter.com/1.1/search/tweets.json" . $query_string);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
@@ -42,6 +42,7 @@ foreach ($just_tweets['statuses'] as $oneTweet)
 	if ($result->num_rows == 0) 
 
 		{
+		$pn_score = 0;
 		$formatted_time = substr($oneTweet['created_at'],4,-10);
 		$dt = date("Y-m-d H:i:s", strtotime($formatted_time));
 
@@ -58,7 +59,7 @@ foreach ($just_tweets['statuses'] as $oneTweet)
 
 		foreach ($tokenized_list as $oneWord)
 		{
-			$pn_score = get_word_score($oneWord);
+			$pn_score+= get_word_score($oneWord,$conn);
 		}
 
 		/*for each element in token*/

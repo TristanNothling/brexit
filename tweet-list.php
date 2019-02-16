@@ -1,12 +1,27 @@
 <?php 
 
+function get_smiley($sc)
+{
+	if ($sc<0)
+	{
+return "<span class='bad'>:(</span>";
+	}
+	if ($sc>0)
+	{
+return "<span class='good'>:)</span>";
+	}
+	return "<span class='meh'>:|</span>";
+}
+
 include 'db-connector.php';
+
+echo '<tr><th>Tweet</th><th>Score</th></tr>';
 
 $sql = "SELECT * FROM tweets ORDER BY created_at DESC";
 $result = $conn->query($sql);
 while ($row = $result->fetch_assoc()) 
 {
-    echo "<p>" . $row['text'] . "</p><b class='score'>". $row['score'] . "</b>";
+    echo "<tr><td class='tweety' "><p>" . $row['text'] . "</p></td><td><p class='score'>". get_smiley($row['score']) . "</p></td></tr>";
 }
 
 ?>

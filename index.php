@@ -35,6 +35,31 @@ p
 	font-family: 'Montserrat', sans-serif;
 }
 
+.score
+{
+	padding: 1rem;
+    letter-spacing: 6px;
+    font-size: 25px;
+}
+
+.bad
+{
+	color: #f21d56;
+}
+.good
+{
+	color: #33d418;
+}
+.meh
+{
+	color: #1da1f2;
+}
+
+.tweety
+{
+	width:80%;
+}
+
 </style>
 </head>
 
@@ -45,6 +70,10 @@ p
 </div>
 
 <div class="tweet-list" style="width:92%;height:100%;padding:1rem;">
+	<table class="tweet-list-tab">
+		
+
+
 </div>
 
 </body>
@@ -74,7 +103,7 @@ function list_the_tweets()
 		});
 	second_request.done(function(tweets)
 		{        
-		$('.tweet-list').html(tweets);
+		$('.tweet-list-tab').html(tweets);
 		});
 }
 
