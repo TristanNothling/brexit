@@ -26,38 +26,43 @@
 	color:#FFF;
 }
 
-p
-{
-	padding: 0.5rem;
-    border-bottom: 1px solid #22222222;
-    padding-bottom: 22px;
-    font-size: 16px;
-	font-family: 'Montserrat', sans-serif;
-}
-
 .score
 {
-	padding: 1rem;
-    letter-spacing: 6px;
-    font-size: 25px;
+    letter-spacing: 8px;
+    font-size: 26px;
+    font-weight: 800;
+
 }
 
 .bad
 {
+
 	color: #f21d56;
 }
 .good
 {
+
 	color: #33d418;
+
 }
 .meh
 {
 	color: #1da1f2;
+
 }
 
 .tweety
 {
 	width:80%;
+	border-bottom: 1px solid #22222222;
+	font-size: 16px;
+	
+}
+
+td
+{
+	font-family: 'Montserrat', sans-serif;
+	padding:1.8rem;
 }
 
 </style>

@@ -21,7 +21,7 @@ $sql = "SELECT * FROM tweets ORDER BY created_at DESC";
 $result = $conn->query($sql);
 while ($row = $result->fetch_assoc()) 
 {
-    echo "<tr><td class='tweety'><p>" . $row['text'] . "</p></td><td><p class='score'>". get_smiley($row['score']) . "</p></td></tr>";
+    echo "<tr><td class='tweety'>" . $row['text'] . "</td><td class='score'>". get_smiley($row['score']) . "</td></tr>";
 }
 
 ?>
