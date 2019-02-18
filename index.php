@@ -90,7 +90,7 @@ td
 function get_more_tweets()
 {
 	var first_request = $.get({
-		url: "http://bid4myjob.co.uk/get-more-tweets.php",
+		url: "get-more-tweets.php",
 		method: "GET"
 		});
 	first_request.done(function(msg)
@@ -103,7 +103,7 @@ function get_more_tweets()
 function list_the_tweets()
 {
 	var second_request = $.get({
-		url: "http://bid4myjob.co.uk/tweet-list.php",
+		url: "tweet-list.php",
 		method: "GET"
 		});
 	second_request.done(function(tweets)
