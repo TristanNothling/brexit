@@ -1,3 +1,20 @@
+<?php
+
+/*ways to improve - */
+
+/* introduce small buttons next to each tweet, positive or negative. on a positive click, scan
+entire sentance for new words and apply a score of +1 in the db to all of them (or add 1 to the score
+if this word already exists in the word table) and -1 for a negative click. with enough data
+you could train the data model to recognise the same words you do. expanding on this, left and right
+clicks on words could also indocate very strongly positive or negative words */
+
+/* phrase analysis and puncuation analysis. some phrases are more often used when the 
+person using them is being sarcastic or is mocking something - this could play 
+into the anlysis, as well as the use of full stops and quotes */
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,7 +133,7 @@ $('#fetch').click( function() {
 	get_more_tweets();
 })
 
-get_more_tweets();
+list_the_tweets();
 
 </script>
 </html>
